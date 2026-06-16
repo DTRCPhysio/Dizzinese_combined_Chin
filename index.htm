@@ -2,16 +2,18 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>ABC + DHI 合併量表</title>
+<title>ABCS + DHI（繁體中文）</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:#f5f5f7; padding:20px; }
 .container { max-width:900px; margin:auto; background:#fff; padding:20px; border-radius:10px; }
 h1 { font-size:1.6rem; margin-top:30px; }
+.instructions { font-size:0.95rem; color:#444; }
 table { width:100%; border-collapse:collapse; margin-top:1rem; }
-th, td { padding:8px; }
+th, td { padding:10px; vertical-align:top; }
 tr:nth-child(even) { background:#fafafa; }
-.options label { margin-right:10px; }
+.slider-value { font-weight:bold; margin-left:10px; }
 button { margin-top:20px; padding:10px 20px; font-size:1rem; border:none; border-radius:5px; background:#007aff; color:#fff; cursor:pointer; }
 button:hover { background:#005fcc; }
 
@@ -25,54 +27,82 @@ button:hover { background:#005fcc; }
 <body>
 <div class="container">
 
-<!-- ABC -->
-<h1>活動平衡信心量表（ABC量表）</h1>
-<p>請以 0–100% 填寫每一項目。</p>
+<!-- ABCS -->
+<h1>活動特異性平衡信心量表（ABCS）</h1>
+<p class="instructions">請以 0–100% 表示您對完成下列活動時「不會跌倒或失去平衡」的信心程度。</p>
+
 <table>
 <tr><th>項目</th><th>活動描述</th><th>信心 (%)</th></tr>
+
 <script>
+const abcItemsTC = [
+"走在屋內？",
+"走上或走下樓梯？",
+"彎腰從衣櫃前方地板撿起拖鞋？",
+"從與眼睛同高的架子上拿取小罐頭？",
+"踮腳尖拿取頭頂上方的物品？",
+"站在椅子上拿取物品？",
+"掃地？",
+"從家裡走到停在車道上的汽車？",
+"上下汽車？",
+"穿越停車場走向商場？",
+"走上或走下斜坡？",
+"在擁擠的商場中行走，旁人快速從您身旁經過？",
+"在商場行走時被他人撞到？",
+"在扶手電梯上握著扶手上下電梯？",
+"手上拿著物品、無法抓扶手時上下扶手電梯？",
+"在結冰的人行道上行走？"
+];
+
 for (let i=1;i<=16;i++){
-document.write(`<tr>
+document.write(`
+<tr>
 <td>${i}</td>
-<td>項目描述 ${i}</td>
-<td><input type="number" name="abc${i}" min="0" max="100"></td>
-</tr>`);
+<td>${abcItemsTC[i-1]}</td>
+<td>
+<input type="range" min="0" max="100" value="50" name="abc${i}" oninput="updateValue(${i}, this.value)">
+<span id="val${i}" class="slider-value">50%</span>
+</td>
+</tr>
+`);
 }
 </script>
 </table>
 
 <!-- DHI -->
-<h1>暈眩障礙量表 DHI（繁體中文）</h1>
-<p>會=4 分、有時會=2 分、不會=0 分。</p>
+<h1>暈眩障礙量表（DHI）</h1>
+<p class="instructions">請以「會 / 有時會 / 不會」回答。會=4 分、有時會=2 分、不會=0 分。</p>
+
 <table>
 <tr><th>項目</th><th>問題</th><th>回答</th></tr>
+
 <script>
 const dhiQuestions = [
-"P1 把眼睛往上望會不會使問題惡化?",
-"E2 這問題會不會使你感到灰心失意?",
-"F3 你會不會因為這問題而限制自己的商務運行或娛樂活動?",
-"P4 在超級市場的通道行走會不會使問題惡化?",
-"F5 這問題會不會使你難於上床或下床?",
-"F6 這問題會不會限制你參與社交活動?",
-"F7 這問題會不會使你難於閱讀?",
-"P8 運動或家務會不會使問題惡化?",
-"E9 問題會不會使你害怕單獨外出?",
-"E10 這問題會不會使你難堪?",
-"P11 快速移動頭部會不會使問題惡化?",
-"F12 這問題會不會使你失去自尊?",
-"P13 在床上翻身會不會使問題惡化?",
-"F14 這問題會不會使你難於處理家務?",
-"E15 你會不會害怕別人覺得你無法自制?",
-"E16 這問題會不會使你難於獨自散步?",
-"P17 在行人道走路會不會使問題惡化?",
-"E18 這問題會不會使你難於集中精神?",
-"E19 這問題會不會使你難於在黑暗中走動?",
-"E20 這問題會不會使你害怕獨自在家?",
-"E21 這問題會不會使你覺得身體有缺憾?",
-"E22 這問題會不會影響你的人際關係?",
-"E23 這問題會不會使你沮喪?",
-"F24 這問題會不會妨礙你工作或家務?",
-"P25 向前彎腰會不會使問題惡化?"
+"P1 把眼睛往上望會不會使問題惡化？",
+"E2 這問題會不會使你感到灰心失意？",
+"F3 你會不會因為這問題而限制自己的商務運行或娛樂活動？",
+"P4 在超級市場的通道行走會不會使問題惡化？",
+"F5 這問題會不會使你難於上床或下床？",
+"F6 這問題會不會限制你參與社交活動？",
+"F7 這問題會不會使你難於閱讀？",
+"P8 運動或家務會不會使問題惡化？",
+"E9 問題會不會使你害怕單獨外出？",
+"E10 這問題會不會使你難堪？",
+"P11 快速移動頭部會不會使問題惡化？",
+"F12 這問題會不會使你失去自尊？",
+"P13 在床上翻身會不會使問題惡化？",
+"F14 這問題會不會使你難於處理家務？",
+"E15 你會不會害怕別人覺得你無法自制？",
+"E16 這問題會不會使你難於獨自散步？",
+"P17 在行人道走路會不會使問題惡化？",
+"E18 這問題會不會使你難於集中精神？",
+"E19 這問題會不會使你難於在黑暗中走動？",
+"E20 這問題會不會使你害怕獨自在家？",
+"E21 這問題會不會使你覺得身體有缺憾？",
+"E22 這問題會不會影響你的人際關係？",
+"E23 這問題會不會使你沮喪？",
+"F24 這問題會不會妨礙你工作或家務？",
+"P25 向前彎腰會不會使問題惡化？"
 ];
 
 for (let i=1;i<=25;i++){
@@ -80,7 +110,7 @@ document.write(`
 <tr>
 <td>${dhiQuestions[i-1].split(" ")[0]}</td>
 <td>${dhiQuestions[i-1].substring(dhiQuestions[i-1].indexOf(" ")+1)}</td>
-<td class="options">
+<td>
 <label><input type="radio" name="dhi${i}" value="4">會</label>
 <label><input type="radio" name="dhi${i}" value="2">有時會</label>
 <label><input type="radio" name="dhi${i}" value="0">不會</label>
@@ -91,7 +121,7 @@ document.write(`
 </script>
 </table>
 
-<button onclick="showPasswordBox()">展示給治療師</button>
+<button onclick="openPassword()">展示給治療師</button>
 
 </div>
 
@@ -99,6 +129,7 @@ document.write(`
 <div id="resultModal" class="modal">
 <div class="modal-content">
 <span class="close" onclick="closeModal()">&times;</span>
+
 <div id="passwordSection">
 <p>請輸入密碼：</p>
 <input type="password" id="pwdInput">
@@ -107,20 +138,27 @@ document.write(`
 
 <div id="resultSection" style="display:none;">
 <h3>結果</h3>
-<p>ABC 平均分數：<span id="abcScore"></span></p>
+<p>ABCS 平均分數：<span id="abcScore"></span></p>
 <p>DHI 總分：<span id="dhiScore"></span></p>
 <p>DHI 障礙程度：<span id="dhiLevel"></span></p>
 </div>
+
 </div>
 </div>
 
 <script>
-function showPasswordBox(){
- document.getElementById("resultModal").style.display="block";
+function updateValue(i, val){
+ document.getElementById("val"+i).textContent = val + "%";
+}
+
+function openPassword(){
+ document.getElementById("resultModal").style.display = "block";
 }
 
 function closeModal(){
- document.getElementById("resultModal").style.display="none";
+ document.getElementById("resultModal").style.display = "none";
+ document.getElementById("passwordSection").style.display = "block";
+ document.getElementById("resultSection").style.display = "none";
 }
 
 function verifyPassword(){
@@ -130,21 +168,17 @@ function verifyPassword(){
    return;
  }
  calculateScores();
- document.getElementById("passwordSection").style.display="none";
- document.getElementById("resultSection").style.display="block";
+ document.getElementById("passwordSection").style.display = "none";
+ document.getElementById("resultSection").style.display = "block";
 }
 
 function calculateScores(){
- // ABC
- let totalABC = 0, countABC = 0;
+ // ABCS
+ let totalABC = 0;
  for (let i=1;i<=16;i++){
-   const v = document.getElementsByName("abc"+i)[0].value;
-   if (v !== ""){
-     totalABC += Number(v);
-     countABC++;
-   }
+   totalABC += Number(document.getElementsByName("abc"+i)[0].value);
  }
- const abcAvg = (countABC===0)?0:(totalABC/countABC);
+ const abcAvg = totalABC / 16;
  document.getElementById("abcScore").textContent = abcAvg.toFixed(1) + "%";
 
  // DHI
